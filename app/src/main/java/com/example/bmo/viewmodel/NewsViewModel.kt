@@ -24,6 +24,9 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
     private val _top_news_list: MutableLiveData<ArrayList<News>> = MutableLiveData(arrayListOf())
     val top_news_list: LiveData<ArrayList<News>> = _top_news_list
 
+    private var _favorite_news_list: MutableLiveData<List<News>> = MutableLiveData(arrayListOf())
+    val favorite_news_list: LiveData<List<News>> = _favorite_news_list
+
     fun all_news(
         api_key: String,
         q: String,
@@ -40,7 +43,7 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe ({ result -> _all_news_list.value = result.articles })
-                { error -> Log.e(TAG,"newsByTitle: $error") }
+                { error -> Log.e(TAG,"VM all_news : $error") }
 
         composite_disposable.add(observable)
     }
@@ -58,10 +61,14 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe ({ result -> _top_news_list.value = result.articles })
-                { error -> Log.e(TAG,"newsByTitle: $error") }
+                { error -> Log.e(TAG,"VM top_news: $error") }
 
         composite_disposable.add(observable)
     }
+
+    fun insert_article(article: News) = repository.insert_article(article)
+    fun delete_article(id: Int) = repository.delete_article(id)
+    fun get_articles() { _favorite_news_list = repository.get_articles() }
 
     override fun onCleared() {
         super.onCleared()

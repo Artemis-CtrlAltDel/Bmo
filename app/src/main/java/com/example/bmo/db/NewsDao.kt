@@ -1,6 +1,7 @@
 package com.example.bmo.db
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,5 +18,5 @@ interface NewsDao {
     fun delete_article(id: Int)
 
     @Query("SELECT * FROM news_table")
-    fun get_articles(): LiveData<List<News>>
+    fun get_articles(): MutableLiveData<List<News>>
 }
