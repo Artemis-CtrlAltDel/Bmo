@@ -7,4 +7,85 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--ROOT-->
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="color_text_secondary_light">#B8B8B8</color>
+    <color name="color_text_secondary_dark">#E4E4E4</color>
+
+    <color name="color_grey">#CACACA</color>
+    <color name="color_recent_files_icon_0">#5b6876</color>
+    <color name="color_recent_files_icon_1">#505B6876</color>
+
+    <color name="color_primary_0">#033266</color>
+    <color name="color_primary_0_5">#92033266</color>
+    <color name="color_primary_1">#074b8a</color>
+    <color name="color_primary_2">#2978b0</color>
+    <color name="color_primary_2_5">#912978B0</color>
+    <color name="color_primary_3">#812978B0</color>
+    <color name="color_primary_4">#712978B0</color>
+    <color name="color_primary_5">#122978B0</color>
+
+    <color name="color_complementary_0">#ad446e</color>
+    <color name="color_complementary_1">#d5719e</color>
+    <color name="color_complementary_2">#dc8db2</color>
+    <color name="color_complementary_5">#17DC8DB2</color>
+    <color name="color_complementary_6">#25E6DBE0</color>
+
+
+    <color name="color_harmony_0">#e1df6a</color>
+    <color name="color_harmony_0_0_1">#fff200</color>
+    <color name="color_harmony_0_1">#90E1DF6A</color>
+    <color name="color_harmony_0_2">#70E1DF6A</color>
+    <color name="color_harmony_0_6">#37E1DF6A</color>
+    <color name="color_harmony_0_7">#27E1DF6A</color>
+    <color name="color_harmony_0_8">#d5cb71</color>
+
+    <color name="color_harmony_1">#FC427B</color>
+    <color name="color_harmony_1_0">#ffc7df</color>
+    <color name="color_tri_harmony_1">#44ad8f</color>
+    <color name="color_tri_harmony_1_0">#c7ffeb</color>
+
+    <color name="color_harmony_2">#dc845a</color>
+    <color name="color_harmony_2_1">#95DC845A</color>
+    <color name="color_harmony_3">#e6a295</color>
+    <color name="color_harmony_3_1">#BFE6A295</color>
+    <color name="color_harmony_5">#c4913f</color>
+    <color name="color_harmony_6">#80a2b5</color>
+    <color name="color_harmony_6_1">#8180A2B5</color>
+
+    <color name="color_text_primary_0">#FF000000</color>
+    <color name="color_text_primary_1">#D3000000</color>
+    <color name="color_text_primary_2">#B9000000</color>
+    <color name="color_text_primary_2_5">#90000000</color>
+    <color name="color_text_primary_3">#77000000</color>
+    <color name="color_text_primary_4">#66000000</color>
+
+    <color name="color_text_complement_0">#FFFFFF</color>
+    <color name="color_text_complement_1">#F3FFFFFF</color>
+    <color name="color_text_complement_2">#D3FFFFFF</color>
+    <color name="color_text_complement_5">#7AFFFFFF</color>
+    <color name="color_text_complement_7">#40FFFFFF</color>
+
+    <color name="color_random_1">#E4CC8B</color>
+    <color name="color_random_2">#7DD16F</color>
+    <color name="color_random_3">#6DADCF</color>
+    <color name="color_random_4">#354159</color>
+    <color name="color_random_4_1">#99354159</color>
+    <color name="color_random_5">#633D6E</color>
+    <color name="color_random_6">#3B7046</color>
+    <color name="color_random_7">#AC467E</color>
+    <color name="color_random_8">#A363A8</color>
+    <color name="color_random_9">#76599F</color>
+
+    <color name="color_icon_active">#fff200</color>
+    <color name="color_icon_inactive">#fff</color>
+
+    <color name="color_multiply_bg_primary">#303952</color>
+    <color name="color_multiply_bg_secondary">#1f283e</color>
+
+    <color name="color_post_bg">#BF1F283E</color>
+
+    <color name="color_toolbar_bg">#BF182C61</color>
 </resources>

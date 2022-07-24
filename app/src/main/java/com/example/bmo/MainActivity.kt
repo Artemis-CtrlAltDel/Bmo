@@ -5,19 +5,22 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.example.bmo.adapters.ViewPagerAdapter
 import com.example.bmo.databinding.ActivityMainBinding
 import com.example.bmo.others.API_KEY
 import com.example.bmo.others.LocationService
+import com.example.bmo.ui.AllNewsFragment
+import com.example.bmo.ui.FavoriteNewsFragment
+import com.example.bmo.ui.TopNewsFragment
 import com.example.bmo.viewmodel.NewsViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val TAG = "MainActivity"
-
-    private var location_service: LocationService = LocationService(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,34 +32,18 @@ class MainActivity : AppCompatActivity() {
 
             val view_model = ViewModelProvider(this@MainActivity)[NewsViewModel::class.java]
 
-            location_service.location_update {
-                val last_location = it.lastLocation
-                val latitude = last_location.latitude
-                val longitude = last_location.longitude
+            val fragment_titles = arrayListOf(
+                AllNewsFragment().TITLE,
+                TopNewsFragment().TITLE,
+                FavoriteNewsFragment().TITLE
+            )
 
-                val current_location = Geocoder(applicationContext)
-                    .getFromLocation(latitude, longitude, 1)[0]
+            val view_pager_adapter = ViewPagerAdapter(this@MainActivity)
+            viewPager.adapter = view_pager_adapter
 
-                current_location.apply {
-                    view_model.top_news(API_KEY, country = current_location.countryCode.lowercase())
-                }
-            }
-
-            view_model.top_news_list.observe(this@MainActivity)
-            {
-                Log.e(TAG, "mohamed : $it")
-            }
-
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = fragment_titles[position]
+            }.attach()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        location_service.stop_location_update()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        location_service.start_location_update()
     }
 }

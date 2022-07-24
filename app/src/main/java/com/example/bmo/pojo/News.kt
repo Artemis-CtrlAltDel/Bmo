@@ -7,9 +7,10 @@ data class News(
     val title: String,
     val description: String,
     val url: String,
-    val url_to_image: String,
-    val published_at: String,
+    val urlToImage: String,
+    val publishedAt: String,
     val content: String,
 
-    val is_favorite: Boolean = false
+    var is_favorite: Boolean = false,
+    var favorite_count: Long = 0
 )

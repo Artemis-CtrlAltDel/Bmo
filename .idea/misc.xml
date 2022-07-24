@@ -3,7 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/card_border.xml" value="0.183" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/draw_favorite_count_bg.xml" value="0.183" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/ic_bookmark.xml" value="0.183" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/fragment_all_news.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/fragment_bookmark_news.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/fragment_top_news.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/item_news_card.xml" value="0.253125" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/recycler_item_all_news.xml" value="0.2" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/recycler_item_latest_news.xml" value="0.2076923076923077" />
       </map>
     </option>
   </component>
