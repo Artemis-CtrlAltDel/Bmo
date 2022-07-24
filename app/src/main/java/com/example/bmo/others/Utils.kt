@@ -1,4 +1,20 @@
 package com.example.bmo.others
 
-val formatter = NumberFormatter()
-fun Long.format() = formatter.format(this)
+import java.text.SimpleDateFormat
+import java.util.*
+
+val likes_formatter = LikesFormatter()
+fun Long.format() = likes_formatter.format(this)
+
+val time_formatter = TimeFormatter()
+fun String.format() = time_formatter.format(this).joinToString(separator = " ")
+
+fun Date.format(format: String, locale: Locale = Locale.getDefault()): String {
+    val formatter = SimpleDateFormat(format, locale)
+    return formatter.format(this)
+}
+
+fun current_date_time(): Date = Calendar.getInstance().time
+
+fun String.month() = this.split("T")[0].split("-")[1]
+fun String.year() = this.split("T")[0].split("-")[0]

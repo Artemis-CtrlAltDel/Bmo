@@ -2,7 +2,7 @@ package com.example.bmo.others
 
 import java.util.*
 
-class NumberFormatter {
+class LikesFormatter {
 
     private val suffixes: NavigableMap<Long, String> = TreeMap()
 

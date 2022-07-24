@@ -11,7 +11,7 @@ import com.example.bmo.R
 import com.example.bmo.others.format
 import com.example.bmo.pojo.News
 
-class AllNewsAdapter(var items: ArrayList<News>, val on_item_click: OnItemClick): RecyclerView.Adapter<AllNewsAdapter.ViewHolder>() {
+class AllNewsAdapter(val view_type: Int, var items: ArrayList<News>, val on_item_click: OnItemClick): RecyclerView.Adapter<AllNewsAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val news_image: ImageView = itemView.findViewById(R.id.news_image)
@@ -23,7 +23,11 @@ class AllNewsAdapter(var items: ArrayList<News>, val on_item_click: OnItemClick)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_latest_news, parent, false))
+        ViewHolder(LayoutInflater.from(parent.context).inflate(
+            when(view_type){
+                0 -> R.layout.recycler_item_latest_news
+                else-> R.layout.recycler_item_all_news }
+            , parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -31,10 +35,15 @@ class AllNewsAdapter(var items: ArrayList<News>, val on_item_click: OnItemClick)
             val context = news_image.context
 
             items[position].apply {
-                Glide.with(context).load(urlToImage)
+                Glide.with(context).load(
+                    when (urlToImage.isNullOrBlank()) {
+                        true -> context.getDrawable(R.drawable.image_news_default)
+                        else -> urlToImage
+                    }
+                ).into(news_image)
                 news_description.text = description
                 news_author.text = author
-                news_published_at.text = publishedAt
+                news_published_at.text = publishedAt.format()
                 news_favorite_count.text = "${favorite_count.format()}"
 
                 news_favorite.setImageDrawable(

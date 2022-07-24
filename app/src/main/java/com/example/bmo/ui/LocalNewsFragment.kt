@@ -8,22 +8,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.example.bmo.R
-import com.example.bmo.databinding.FragmentAllNewsBinding
-import com.example.bmo.databinding.FragmentTopNewsBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bmo.adapters.AllNewsAdapter
+import com.example.bmo.adapters.OnItemClick
+import com.example.bmo.databinding.FragmentLocalNewsBinding
 import com.example.bmo.others.API_KEY
 import com.example.bmo.others.LocationService
 import com.example.bmo.viewmodel.NewsViewModel
 
-class TopNewsFragment : Fragment() {
+class LocalNewsFragment : Fragment() {
 
-    val TITLE = "Local news"
+    private val TAG = "TopNewsFragment"
 
-    private var _binding : FragmentTopNewsBinding? = null
+    val TITLE = "Locals"
+
+    private var _binding : FragmentLocalNewsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var location_service: LocationService
-    private lateinit var top_news_view_model: NewsViewModel
+    private lateinit var view_model: NewsViewModel
+
+    private lateinit var local_news_adapter: AllNewsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +39,20 @@ class TopNewsFragment : Fragment() {
         val activity = requireActivity()
 
         location_service = LocationService(activity)
-        top_news_view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
+        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
 
-        _binding = FragmentTopNewsBinding.inflate(inflater, container, false)
+        _binding = FragmentLocalNewsBinding.inflate(inflater, container, false)
         binding.apply {
+
+            local_news_adapter = AllNewsAdapter(
+                1,
+                arrayListOf(),
+                object: OnItemClick {
+                    override fun on_favorite_click(position: Int) {
+
+                    }
+                }
+            )
 
             location_service.location_update {
                 val last_location = it.lastLocation
@@ -48,17 +63,22 @@ class TopNewsFragment : Fragment() {
                     .getFromLocation(latitude, longitude, 1)[0]
 
                 current_location.apply {
-                    someText.text = current_location.locality
-                    top_news_view_model.top_news(API_KEY, country = current_location.countryCode.lowercase(), page_size = 3)
+                    view_model.top_news(API_KEY, country = countryCode.lowercase())
                 }
             }
 
-            top_news_view_model.news_list.observe(activity)
+            view_model.top_news_list.observe(activity)
             {
                 if (it.isNotEmpty()) {
-
+                    local_news_adapter.set_items(it)
+                    Log.e(TAG, "local news requested")
                 }
             }
+
+            localNewsRecycler.adapter = local_news_adapter
+            localNewsRecycler.setHasFixedSize(true)
+            localNewsRecycler.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             return root
         }

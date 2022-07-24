@@ -1,32 +1,32 @@
 package com.example.bmo.ui
 
-import android.location.Geocoder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bmo.adapters.AllNewsAdapter
 import com.example.bmo.adapters.OnItemClick
 import com.example.bmo.databinding.FragmentAllNewsBinding
-import com.example.bmo.others.API_KEY
-import com.example.bmo.others.LocationService
+import com.example.bmo.others.*
 import com.example.bmo.viewmodel.NewsViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 class AllNewsFragment : Fragment() {
 
-    val TITLE = "World news"
+    private val TAG = "AllNewsFragment"
+
+    val TITLE = "World-wide"
 
     private var _binding : FragmentAllNewsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var location_service: LocationService
     private lateinit var view_model: NewsViewModel
 
-    private lateinit var adapter: AllNewsAdapter
+    private lateinit var latest_news_adapter: AllNewsAdapter
+    private lateinit var all_news_adapter: AllNewsAdapter
+
+    private val current_date = current_date_time().format("yyyy-MM-dd")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,62 +37,68 @@ class AllNewsFragment : Fragment() {
         val context = requireContext()
         val activity = requireActivity()
 
-        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
+//        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
 
         _binding = FragmentAllNewsBinding.inflate(inflater, container, false)
         binding.apply {
 
-            view_model.all_news(API_KEY, q = "a", page_size = 20)
+//            view_model.all_news(API_KEY, q = "a")
 
-            location_service = LocationService(context)
-            location_service.location_update {
-                val last_location = it.lastLocation
-                val latitude = last_location.latitude
-                val longitude = last_location.longitude
+            latest_news_adapter =
+                AllNewsAdapter(
+                    0,
+                    arrayListOf(),
+                    object: OnItemClick {
+                        override fun on_favorite_click(position: Int) {
 
-                val current_location = Geocoder(context)
-                    .getFromLocation(latitude, longitude, 1)[0]
+                        }
+                    })
 
-                current_location.apply {
-                    view_model.top_news(API_KEY, country = current_location.countryCode.lowercase(), page_size = 10)
-                }
-            }
+            all_news_adapter =
+                AllNewsAdapter(
+                    1,
+                    arrayListOf(),
+                    object: OnItemClick {
+                        override fun on_favorite_click(position: Int) {
 
-            adapter =
-                AllNewsAdapter(arrayListOf(), object: OnItemClick {
-                    override fun on_favorite_click(position: Int) {
-                    }
+                        }
+                    })
 
-                    override fun on_bookmark_click(position: Int) {
-                    }
+//            view_model.all_news_list.observe(activity)
+//            {
+//                if (it.isNotEmpty()) {
+//                    latest_news_adapter.set_items(it)
+//
+//                    latest_news_adapter.items.forEach { article->
+//                        if (article.publishedAt.month() != current_date.split("-")[1] &&
+//                                article.publishedAt.year() != current_date.split("-")[0])
+//                            latest_news_adapter.items.remove(article)
+//                    }
+//                    Log.e(TAG, "latest news requested")
+//                }
+//            }
+//
+//            view_model.all_news_list.observe(activity)
+//            {
+//                if (it.isNotEmpty()) {
+//                    all_news_adapter.set_items(it)
+//                    Log.e(TAG, "all news requested")
+//                }
+//            }
 
-                })
-
-            view_model.news_list.observe(activity)
-            {
-                if (it.isNotEmpty()) {
-                    adapter.set_items(it)
-                }
-            }
-
-            latestNewsRecycler.adapter = adapter
+            latestNewsRecycler.adapter = latest_news_adapter
             latestNewsRecycler.setHasFixedSize(true)
             latestNewsRecycler.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+            allNewsRecycler.adapter = all_news_adapter
+            allNewsRecycler.setHasFixedSize(true)
+            allNewsRecycler.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
             return root
         }
 
-    }
-
-    override fun onPause() {
-        super.onPause()
-        location_service.stop_location_update()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        location_service.start_location_update()
     }
 
     override fun onDestroy() {
