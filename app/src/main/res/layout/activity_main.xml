@@ -14,7 +14,12 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="70dp"
+            android:paddingBottom="6dp"
+
+            app:tabIndicator="@drawable/draw_tab_indicator"
+            app:tabIndicatorHeight="3dp"
+            app:tabTextColor="#C4C4C4"
             />
 
         <androidx.viewpager2.widget.ViewPager2

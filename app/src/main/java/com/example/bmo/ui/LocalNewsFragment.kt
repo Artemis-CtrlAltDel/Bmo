@@ -1,7 +1,9 @@
 package com.example.bmo.ui
 
+import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,12 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bmo.NewsCardActivity
 import com.example.bmo.adapters.AllNewsAdapter
 import com.example.bmo.adapters.OnItemClick
 import com.example.bmo.databinding.FragmentLocalNewsBinding
 import com.example.bmo.others.API_KEY
 import com.example.bmo.others.LocationService
+import com.example.bmo.others.favorite_item
+import com.example.bmo.pojo.News
 import com.example.bmo.viewmodel.NewsViewModel
+import java.io.Serializable
 
 class LocalNewsFragment : Fragment() {
 
@@ -30,6 +36,8 @@ class LocalNewsFragment : Fragment() {
 
     private lateinit var local_news_adapter: AllNewsAdapter
 
+    private lateinit var intent: Intent
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +45,8 @@ class LocalNewsFragment : Fragment() {
 
         val context = requireContext()
         val activity = requireActivity()
+
+        intent = Intent(activity, NewsCardActivity::class.java)
 
         location_service = LocationService(activity)
         view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
@@ -49,7 +59,12 @@ class LocalNewsFragment : Fragment() {
                 arrayListOf(),
                 object: OnItemClick {
                     override fun on_favorite_click(position: Int) {
+                        local_news_adapter.item_at(position).favorite_item(view_model = view_model)
+                    }
 
+                    override fun on_article_click(position: Int) {
+                        intent.putExtra("article", local_news_adapter.item_at(position))
+                        startActivity(intent)
                     }
                 }
             )
@@ -70,6 +85,8 @@ class LocalNewsFragment : Fragment() {
             view_model.top_news_list.observe(activity)
             {
                 if (it.isNotEmpty()) {
+                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
+
                     local_news_adapter.set_items(it)
                     Log.e(TAG, "local news requested")
                 }

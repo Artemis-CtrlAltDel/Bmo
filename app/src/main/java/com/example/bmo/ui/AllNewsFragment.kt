@@ -1,15 +1,20 @@
 package com.example.bmo.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bmo.NewsCardActivity
 import com.example.bmo.adapters.AllNewsAdapter
 import com.example.bmo.adapters.OnItemClick
 import com.example.bmo.databinding.FragmentAllNewsBinding
 import com.example.bmo.others.*
+import com.example.bmo.pojo.News
 import com.example.bmo.viewmodel.NewsViewModel
 
 class AllNewsFragment : Fragment() {
@@ -28,21 +33,24 @@ class AllNewsFragment : Fragment() {
 
     private val current_date = current_date_time().format("yyyy-MM-dd")
 
+    private lateinit var intent: Intent
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+         //Inflate the layout for this fragment
 
         val context = requireContext()
         val activity = requireActivity()
 
-//        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
+        intent = Intent(activity, NewsCardActivity::class.java)
+        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
 
         _binding = FragmentAllNewsBinding.inflate(inflater, container, false)
         binding.apply {
 
-//            view_model.all_news(API_KEY, q = "a")
+            view_model.all_news(API_KEY, q = "a", sort_by = "publishedAt")
 
             latest_news_adapter =
                 AllNewsAdapter(
@@ -50,7 +58,12 @@ class AllNewsFragment : Fragment() {
                     arrayListOf(),
                     object: OnItemClick {
                         override fun on_favorite_click(position: Int) {
+                            latest_news_adapter.item_at(position).favorite_item(view_model = view_model)
+                        }
 
+                        override fun on_article_click(position: Int) {
+                            intent.putExtra("article", latest_news_adapter.item_at(position))
+                            startActivity(intent)
                         }
                     })
 
@@ -60,31 +73,40 @@ class AllNewsFragment : Fragment() {
                     arrayListOf(),
                     object: OnItemClick {
                         override fun on_favorite_click(position: Int) {
+                            all_news_adapter.item_at(position).favorite_item(view_model = view_model)
+                        }
 
+                        override fun on_article_click(position: Int) {
+                            intent.putExtra("article", latest_news_adapter.item_at(position))
+                            startActivity(intent)
                         }
                     })
 
-//            view_model.all_news_list.observe(activity)
-//            {
-//                if (it.isNotEmpty()) {
-//                    latest_news_adapter.set_items(it)
-//
+            view_model.all_news_list.observe(activity)
+            {
+                if (it.isNotEmpty()) {
+                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
+
+                    latest_news_adapter.set_items(it)
+
 //                    latest_news_adapter.items.forEach { article->
 //                        if (article.publishedAt.month() != current_date.split("-")[1] &&
 //                                article.publishedAt.year() != current_date.split("-")[0])
 //                            latest_news_adapter.items.remove(article)
 //                    }
-//                    Log.e(TAG, "latest news requested")
-//                }
-//            }
-//
-//            view_model.all_news_list.observe(activity)
-//            {
-//                if (it.isNotEmpty()) {
-//                    all_news_adapter.set_items(it)
-//                    Log.e(TAG, "all news requested")
-//                }
-//            }
+                    Log.e(TAG, "latest news requested")
+                }
+            }
+
+            view_model.all_news_list.observe(activity)
+            {
+                if (it.isNotEmpty()) {
+                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
+
+                    all_news_adapter.set_items(it)
+                    Log.e(TAG, "all news requested")
+                }
+            }
 
             latestNewsRecycler.adapter = latest_news_adapter
             latestNewsRecycler.setHasFixedSize(true)

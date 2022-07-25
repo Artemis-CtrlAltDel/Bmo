@@ -18,5 +18,5 @@ interface NewsDao {
     fun delete_article(id: Int)
 
     @Query("SELECT * FROM news_table")
-    fun get_articles(): MutableLiveData<List<News>>
+    fun get_articles(): LiveData<List<News>>
 }

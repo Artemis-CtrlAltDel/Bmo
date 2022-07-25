@@ -33,5 +33,5 @@ class Repository @Inject constructor(private val news_api_service: NewsApiServic
 
     fun insert_article(article: News) = news_dao.insert_article(article)
     fun delete_article(id: Int) = news_dao.delete_article(id)
-    fun get_articles(): MutableLiveData<List<News>> = news_dao.get_articles()
+    fun get_articles(): LiveData<List<News>> = news_dao.get_articles()
 }

@@ -24,8 +24,7 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
     private val _top_news_list: MutableLiveData<ArrayList<News>> = MutableLiveData(arrayListOf())
     val top_news_list: LiveData<ArrayList<News>> = _top_news_list
 
-    private var _favorite_news_list: MutableLiveData<List<News>> = MutableLiveData(arrayListOf())
-    val favorite_news_list: LiveData<List<News>> = _favorite_news_list
+    var favorite_news_list: LiveData<List<News>>? = null
 
     fun all_news(
         api_key: String,
@@ -68,7 +67,7 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
 
     fun insert_article(article: News) = repository.insert_article(article)
     fun delete_article(id: Int) = repository.delete_article(id)
-    fun get_articles() { _favorite_news_list = repository.get_articles() }
+    fun get_articles() { favorite_news_list = repository.get_articles() }
 
     override fun onCleared() {
         super.onCleared()

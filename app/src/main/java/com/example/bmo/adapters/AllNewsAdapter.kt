@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bmo.R
@@ -14,6 +15,7 @@ import com.example.bmo.pojo.News
 class AllNewsAdapter(val view_type: Int, var items: ArrayList<News>, val on_item_click: OnItemClick): RecyclerView.Adapter<AllNewsAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        val news_container: CardView = itemView.findViewById(R.id.news_container)
         val news_image: ImageView = itemView.findViewById(R.id.news_image)
         val news_description: TextView = itemView.findViewById(R.id.news_desctiption)
         val news_author: TextView = itemView.findViewById(R.id.news_author)
@@ -59,8 +61,12 @@ class AllNewsAdapter(val view_type: Int, var items: ArrayList<News>, val on_item
                     favorite_count += if (is_favorite) -1 else 1
 
                     is_favorite = !is_favorite
+                    on_item_click.on_favorite_click(position)
+
                     notifyDataSetChanged()
                 }
+
+                news_container.setOnClickListener { on_item_click.on_article_click(position) }
             }
         }
     }

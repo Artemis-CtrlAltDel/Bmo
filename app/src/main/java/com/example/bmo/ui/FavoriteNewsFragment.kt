@@ -1,16 +1,26 @@
 package com.example.bmo.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bmo.NewsCardActivity
 import com.example.bmo.R
+import com.example.bmo.adapters.AllNewsAdapter
+import com.example.bmo.adapters.OnItemClick
 import com.example.bmo.databinding.FragmentFavoriteNewsBinding
+import com.example.bmo.others.remove_item
+import com.example.bmo.pojo.News
 import com.example.bmo.viewmodel.NewsViewModel
 
 class FavoriteNewsFragment : Fragment() {
+
+    private val TAG = "FavoriteNewsFragment"
 
     val TITLE = "Favorites"
 
@@ -18,6 +28,9 @@ class FavoriteNewsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var view_model: NewsViewModel
+    private lateinit var favorite_news_adapter: AllNewsAdapter
+
+    private lateinit var intent: Intent
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,9 +42,47 @@ class FavoriteNewsFragment : Fragment() {
 
         view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
 
+        intent = Intent(activity, NewsCardActivity::class.java)
+
         _binding = FragmentFavoriteNewsBinding.inflate(inflater, container, false)
         binding.apply {
 
+            favorite_news_adapter = AllNewsAdapter(
+                1,
+                arrayListOf(),
+                object: OnItemClick {
+                    override fun on_favorite_click(position: Int) {
+//                        favorite_news_adapter.item_at(position).favorite_item(view_model = view_model)
+                        favorite_news_adapter.item_at(position).remove_item(view_model)
+                    }
+
+                    override fun on_article_click(position: Int) {
+                        intent.putExtra("article", favorite_news_adapter.item_at(position))
+                        startActivity(intent)
+                    }
+                }
+            )
+
+            view_model.get_articles()
+            view_model.favorite_news_list?.observe(activity)
+            {
+                if (it.isNotEmpty()){
+                    it.forEach {
+                        it.apply {
+                            if (source.id.isNullOrEmpty() &&
+                                source.name.isNullOrEmpty())
+                                remove_item(view_model)
+                        }
+                    }
+
+                    favorite_news_adapter.set_items(it as ArrayList<News>)
+                }
+            }
+
+            favoriteNewsRecycler.adapter = favorite_news_adapter
+            favoriteNewsRecycler.setHasFixedSize(true)
+            favoriteNewsRecycler.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             return root
         }
