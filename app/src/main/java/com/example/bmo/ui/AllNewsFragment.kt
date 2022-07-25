@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bmo.NewsCardActivity
@@ -62,8 +63,16 @@ class AllNewsFragment : Fragment() {
                         }
 
                         override fun on_article_click(position: Int) {
-                            intent.putExtra("article", latest_news_adapter.item_at(position))
-                            startActivity(intent)
+                            latest_news_adapter.item_at(position).apply {
+                                if(source.id!= null && source.name!= null) {
+                                    intent.putExtra("article", latest_news_adapter.item_at(position))
+                                    startActivity(intent)
+                                }
+
+                                Toast
+                                    .makeText(context, "Source id or name is missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
                     })
 
@@ -77,8 +86,16 @@ class AllNewsFragment : Fragment() {
                         }
 
                         override fun on_article_click(position: Int) {
-                            intent.putExtra("article", latest_news_adapter.item_at(position))
-                            startActivity(intent)
+                            all_news_adapter.item_at(position).apply {
+                                if(source.id!= null && source.name!= null) {
+                                    intent.putExtra("article", all_news_adapter.item_at(position))
+                                    startActivity(intent)
+                                }
+
+                                Toast
+                                    .makeText(context, "Source id or name is missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
                     })
 
