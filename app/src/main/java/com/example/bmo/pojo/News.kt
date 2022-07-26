@@ -16,17 +16,17 @@ data class News(
     @ColumnInfo(defaultValue = "Source is not available")
     val source: Source,
     @ColumnInfo(defaultValue = "Author is not available")
-    val author: String,
+    val author: String = "Loading",
     @ColumnInfo(defaultValue = "Title is not available")
-    val title: String,
+    val title: String = "Loading",
     @ColumnInfo(defaultValue = "Description is not available")
     val description: String,
     @ColumnInfo(defaultValue = "Url is not available")
     val url: String,
     @ColumnInfo(defaultValue = "UrlToImage is not available")
-    val urlToImage: String,
+    val urlToImage: String = "Loading",
     @ColumnInfo(defaultValue = "PublishedAt is not available")
-    val publishedAt: String,
+    val publishedAt: String = "Loading",
     @ColumnInfo(defaultValue = "Content is not available")
     val content: String,
 

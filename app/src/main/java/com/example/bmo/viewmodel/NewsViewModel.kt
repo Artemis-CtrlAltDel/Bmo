@@ -21,8 +21,8 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
     private val _all_news_list: MutableLiveData<ArrayList<News>> = MutableLiveData(arrayListOf())
     val all_news_list: LiveData<ArrayList<News>> = _all_news_list
 
-    private val _top_news_list: MutableLiveData<ArrayList<News>> = MutableLiveData(arrayListOf())
-    val top_news_list: LiveData<ArrayList<News>> = _top_news_list
+    private val _local_news_list: MutableLiveData<ArrayList<News>> = MutableLiveData(arrayListOf())
+    val local_news_list: LiveData<ArrayList<News>> = _local_news_list
 
     var favorite_news_list: LiveData<List<News>>? = null
 
@@ -47,7 +47,7 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
         composite_disposable.add(observable)
     }
 
-    fun top_news(
+    fun local_news(
         api_key: String,
         country: String,
         q: String? = null,
@@ -56,11 +56,11 @@ class NewsViewModel @Inject constructor(private val repository: Repository): Vie
 
         val observable =
             repository
-                .get_top_news(api_key, country, q, category, page_size)
+                .get_local_news(api_key, country, q, category, page_size)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ({ result -> _top_news_list.value = result.articles })
-                { error -> Log.e(TAG,"VM top_news: $error") }
+                .subscribe ({ result -> _local_news_list.value = result.articles })
+                { error -> Log.e(TAG,"VM local_news: $error") }
 
         composite_disposable.add(observable)
     }

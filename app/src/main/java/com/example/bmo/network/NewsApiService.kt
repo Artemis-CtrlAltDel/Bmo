@@ -20,7 +20,7 @@ interface NewsApiService {
     ): Observable<NewsApiResponse>
 
     @GET("top-headlines")
-    fun get_top_news(
+    fun get_local_news(
         @Query("apiKey") api_key: String,
         @Query("country") country: String,
         @Query("q") q: String? = null,

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bmo.NewsCardActivity
@@ -14,6 +15,7 @@ import com.example.bmo.R
 import com.example.bmo.adapters.AllNewsAdapter
 import com.example.bmo.adapters.OnItemClick
 import com.example.bmo.databinding.FragmentFavoriteNewsBinding
+import com.example.bmo.others.is_source_available
 import com.example.bmo.others.remove_item
 import com.example.bmo.pojo.News
 import com.example.bmo.viewmodel.NewsViewModel
@@ -31,6 +33,7 @@ class FavoriteNewsFragment : Fragment() {
     private lateinit var favorite_news_adapter: AllNewsAdapter
 
     private lateinit var intent: Intent
+    private lateinit var article: News
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,8 +60,12 @@ class FavoriteNewsFragment : Fragment() {
                     }
 
                     override fun on_article_click(position: Int) {
-                        intent.putExtra("article", favorite_news_adapter.item_at(position))
-                        startActivity(intent)
+                        article = favorite_news_adapter.item_at(position)
+                        when (article.is_source_available()) {
+                            true -> {intent.putExtra("article", article)
+                                    startActivity(intent)}
+                            else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             )
@@ -67,14 +74,6 @@ class FavoriteNewsFragment : Fragment() {
             view_model.favorite_news_list?.observe(activity)
             {
                 if (it.isNotEmpty()){
-                    it.forEach {
-                        it.apply {
-                            if (source.id.isNullOrEmpty() &&
-                                source.name.isNullOrEmpty())
-                                remove_item(view_model)
-                        }
-                    }
-
                     favorite_news_adapter.set_items(it as ArrayList<News>)
                 }
             }

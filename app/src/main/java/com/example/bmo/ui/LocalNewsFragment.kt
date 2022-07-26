@@ -14,18 +14,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bmo.NewsCardActivity
 import com.example.bmo.adapters.AllNewsAdapter
+import com.example.bmo.adapters.NewsFilterAdapter
 import com.example.bmo.adapters.OnItemClick
 import com.example.bmo.databinding.FragmentLocalNewsBinding
 import com.example.bmo.others.API_KEY
 import com.example.bmo.others.LocationService
 import com.example.bmo.others.favorite_item
+import com.example.bmo.others.is_source_available
+import com.example.bmo.pojo.Filter
 import com.example.bmo.pojo.News
+import com.example.bmo.pojo.Source
 import com.example.bmo.viewmodel.NewsViewModel
 import java.io.Serializable
 
 class LocalNewsFragment : Fragment() {
 
-    private val TAG = "TopNewsFragment"
+    private val TAG = "LocalNewsFragment"
 
     val TITLE = "Locals"
 
@@ -33,11 +37,13 @@ class LocalNewsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var location_service: LocationService
-    private lateinit var view_model: NewsViewModel
+//    private lateinit var view_model: NewsViewModel
 
     private lateinit var local_news_adapter: AllNewsAdapter
+    private lateinit var filter_news_adapter: NewsFilterAdapter
 
     private lateinit var intent: Intent
+    private lateinit var article: News
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,29 +56,38 @@ class LocalNewsFragment : Fragment() {
         intent = Intent(activity, NewsCardActivity::class.java)
 
         location_service = LocationService(activity)
-        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
+//        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
 
         _binding = FragmentLocalNewsBinding.inflate(inflater, container, false)
         binding.apply {
+
+            filter_news_adapter = NewsFilterAdapter(
+                arrayListOf(
+                    Filter("Programming"),
+                    Filter("Gaming"),
+                    Filter("Holiday"),
+                    Filter("Sport"),
+                    Filter("Fashion"),
+                    Filter("Space"),
+                    Filter("Bitcoin"),
+                    Filter("Technology")
+                )
+            )
 
             local_news_adapter = AllNewsAdapter(
                 1,
                 arrayListOf(),
                 object: OnItemClick {
                     override fun on_favorite_click(position: Int) {
-                        local_news_adapter.item_at(position).favorite_item(view_model = view_model)
+//                        local_news_adapter.item_at(position).favorite_item(view_model = view_model)
                     }
 
                     override fun on_article_click(position: Int) {
-                        local_news_adapter.item_at(position).apply {
-                            if(source.id!= null && source.name!= null) {
-                                intent.putExtra("article", local_news_adapter.item_at(position))
-                                startActivity(intent)
-                            }
-
-                            Toast
-                                .makeText(context, "Source id or name is missing", Toast.LENGTH_SHORT)
-                                .show()
+                        article = local_news_adapter.item_at(position)
+                        when (article.is_source_available()) {
+                            true -> {intent.putExtra("article", article)
+                                    startActivity(intent)}
+                            else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -87,24 +102,37 @@ class LocalNewsFragment : Fragment() {
                     .getFromLocation(latitude, longitude, 1)[0]
 
                 current_location.apply {
-                    view_model.top_news(API_KEY, country = countryCode.lowercase())
+//                    view_model.local_news(API_KEY, country = countryCode.lowercase())
                 }
             }
 
-            view_model.top_news_list.observe(activity)
-            {
-                if (it.isNotEmpty()) {
-                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
+            // Init adapters state
+            local_news_adapter.set_items(arrayListOf(
+                News(0, Source("", ""),
+                    description= "", content= "", url= "")
+            ))
 
-                    local_news_adapter.set_items(it)
-                    Log.e(TAG, "local news requested")
-                }
-            }
+//            view_model.local_news_list.observe(activity)
+//            {
+//                if (it.isNotEmpty()) {
+//                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
+//
+//                    local_news_adapter.set_items(it)
+//                    Log.e(TAG, "local news requested")
+//                }
+//            }
 
             localNewsRecycler.adapter = local_news_adapter
             localNewsRecycler.setHasFixedSize(true)
             localNewsRecycler.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+            filterRecycler.adapter = filter_news_adapter
+            filterRecycler.setHasFixedSize(true)
+            filterRecycler.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+
 
             return root
         }

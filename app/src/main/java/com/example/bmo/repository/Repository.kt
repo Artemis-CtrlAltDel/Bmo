@@ -22,14 +22,14 @@ class Repository @Inject constructor(private val news_api_service: NewsApiServic
 
         news_api_service.get_all_news(api_key, q, domains, sort_by, language, from, to, page_size)
 
-    fun get_top_news(
+    fun get_local_news(
         api_key: String,
         country: String,
         q: String? = null,
         category: String? = null,
         page_size: Int? = null) =
 
-        news_api_service.get_top_news(api_key, country, q, category, page_size)
+        news_api_service.get_local_news(api_key, country, q, category, page_size)
 
     fun insert_article(article: News) = news_dao.insert_article(article)
     fun delete_article(id: Int) = news_dao.delete_article(id)

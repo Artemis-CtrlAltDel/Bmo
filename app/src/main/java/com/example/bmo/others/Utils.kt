@@ -27,3 +27,6 @@ fun News.favorite_item(view_model: NewsViewModel) =
 
 fun News.remove_item(view_model: NewsViewModel) =
     view_model.delete_article(this.id)
+
+fun News.is_source_available(): Boolean =
+    this.source.id!= null
