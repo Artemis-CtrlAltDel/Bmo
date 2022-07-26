@@ -61,11 +61,16 @@ class FavoriteNewsFragment : Fragment() {
 
                     override fun on_article_click(position: Int) {
                         article = favorite_news_adapter.item_at(position)
-                        when (article.is_source_available()) {
-                            true -> {intent.putExtra("article", article)
-                                    startActivity(intent)}
-                            else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
-                        }
+
+                        /** This could be useful in the future **/
+//                        when (article.is_source_available()) {
+//                            true -> {intent.putExtra("article", article)
+//                                    startActivity(intent)}
+//                            else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
+//                        }
+
+                        intent.putExtra("article", article)
+                        startActivity(intent)
                     }
                 }
             )

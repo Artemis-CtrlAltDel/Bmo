@@ -42,7 +42,6 @@ class AllNewsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         //Inflate the layout for this fragment
 
         val context = requireContext()
         val activity = requireActivity()
@@ -66,11 +65,16 @@ class AllNewsFragment : Fragment() {
 
                         override fun on_article_click(position: Int) {
                             article = latest_news_adapter.item_at(position)
-                            when (article.is_source_available()) {
-                                true -> {intent.putExtra("article", article)
-                                        startActivity(intent)}
-                                else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
-                            }
+
+                            /** This could be useful in the future **/
+//                            when (article.is_source_available()) {
+//                                true -> {intent.putExtra("article", article)
+//                                        startActivity(intent)}
+//                                else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
+//                            }
+
+                            intent.putExtra("article", article)
+                            startActivity(intent)
                         }
                     })
 
@@ -85,15 +89,20 @@ class AllNewsFragment : Fragment() {
 
                         override fun on_article_click(position: Int) {
                             article = all_news_adapter.item_at(position)
-                            when (article.is_source_available()) {
-                                true -> {intent.putExtra("article", article)
-                                        startActivity(intent)}
-                                else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
-                            }
+
+                            /** This could be useful in the future **/
+//                            when (article.is_source_available()) {
+//                                true -> {intent.putExtra("article", article)
+//                                        startActivity(intent)}
+//                                else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
+//                            }
+
+                            intent.putExtra("article", article)
+                            startActivity(intent)
                         }
                     })
 
-            // Init adapters state
+            //// Init adapters state
             all_news_adapter.set_items(arrayListOf(
                 News(0, Source("", ""),
                     description= "", content= "", url= "")
