@@ -120,16 +120,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_marginHorizontal="12dp"
                 android:layout_marginBottom="12dp"
-                android:paddingTop="15dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="12dp"
+                    android:paddingBottom="15dp"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,7 +148,9 @@
 
                             android:text="ARTICLE TITLE"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            />
 
                     </LinearLayout>
 
@@ -315,9 +318,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/alata"
-                            android:text="Description : "
+                            android:text="Description"
                             android:textColor="@color/black"
-                            android:textSize="20sp" />
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -331,11 +336,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="ARTICLE DESCRIPTION"
-                                android:textSize="16sp"
-
                                 android:lineSpacingExtra="1dp"
-                                />
+                                android:text="ARTICLE DESCRIPTION"
+
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -349,9 +353,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/alata"
-                            android:text="Content : "
+                            android:text="Content"
                             android:textColor="@color/black"
-                            android:textSize="20sp" />
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -365,11 +371,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="ARTICLE CONTENT"
-                                android:textSize="16sp"
-
                                 android:lineSpacingExtra="1dp"
-                                />
+                                android:text="ARTICLE CONTENT"
+
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
 

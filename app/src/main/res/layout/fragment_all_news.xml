@@ -29,8 +29,9 @@
                     android:paddingVertical="10dp"
                     android:paddingStart="20dp"
                     android:text="Trending"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/latest_news_recycler"
 
@@ -57,8 +58,9 @@
                     android:paddingVertical="10dp"
                     android:paddingStart="20dp"
                     android:text="Explore"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/all_news_recycler"

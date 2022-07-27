@@ -30,8 +30,8 @@
                     android:paddingVertical="10dp"
                     android:paddingStart="20dp"
                     android:text="Filters"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/filter_recycler"
 
@@ -58,8 +58,8 @@
                     android:paddingVertical="10dp"
                     android:paddingStart="20dp"
                     android:text="Local news"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/local_news_recycler"

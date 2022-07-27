@@ -45,7 +45,7 @@ class AllNewsAdapter(val view_type: Int, var items: ArrayList<News>, val on_item
                 ).into(news_image)
                 news_description.text = description
                 news_author.text = author
-                news_published_at.text = publishedAt.format()
+                news_published_at.text = publishedAt?.format()
                 news_favorite_count.text = "${favorite_count.format()}"
 
                 news_favorite.setImageDrawable(
@@ -58,9 +58,6 @@ class AllNewsAdapter(val view_type: Int, var items: ArrayList<News>, val on_item
                 )
 
                 news_favorite.setOnClickListener {
-                    favorite_count += if (is_favorite) -1 else 1
-
-                    is_favorite = !is_favorite
                     on_item_click.on_favorite_click(position)
 
                     notifyDataSetChanged()

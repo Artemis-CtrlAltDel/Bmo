@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.bmo.pojo.News
 
-@Database(entities = [News::class], version = 4, exportSchema = false)
+@Database(entities = [News::class], version = 7, exportSchema = false)
 @TypeConverters(NewsDto::class)
 abstract class NewsDb: RoomDatabase() {
 

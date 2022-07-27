@@ -24,11 +24,16 @@ fun current_date_time(): Date = Calendar.getInstance().time
 fun String.month() = this.split("T")[0].split("-")[1]
 fun String.year() = this.split("T")[0].split("-")[0]
 
-fun News.favorite_item(view_model: NewsViewModel) =
-    view_model.insert_article(this)
+fun News.favorite_item(view_model: NewsViewModel) {
 
-fun News.remove_item(view_model: NewsViewModel) =
-    view_model.delete_article(this.id)
+    when (is_favorite) {
+        true -> view_model.insert_article(this)
+        else -> view_model.delete_article(this.id)
+    }
+
+    favorite_count += if (is_favorite) -1 else 1
+    is_favorite = !is_favorite
+}
 
 fun News.is_source_available(): Boolean =
     this.source.id!= null

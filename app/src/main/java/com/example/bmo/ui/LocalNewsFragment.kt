@@ -80,7 +80,6 @@ class LocalNewsFragment : Fragment() {
                     override fun on_article_click(position: Int) {
                         filter = filter_news_adapter.item_at(position)
                         Log.e(TAG, "filter clicked : ${filter.category}")
-                        local_news_adapter.notifyDataSetChanged()
                     }
 
                 }
@@ -96,13 +95,6 @@ class LocalNewsFragment : Fragment() {
 
                     override fun on_article_click(position: Int) {
                         article = local_news_adapter.item_at(position)
-
-                        /** This could be useful in the future **/
-//                        when (article.is_source_available()) {
-//                            true -> {intent.putExtra("article", article)
-//                                    startActivity(intent)}
-//                            else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
-//                        }
 
                         intent.putExtra("article", article)
                         startActivity(intent)
@@ -135,7 +127,7 @@ class LocalNewsFragment : Fragment() {
             view_model.local_news_list.observe(activity)
             {
                 if (it.isNotEmpty()) {
-                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
+                    (it as List<News>).filter { it.description?.isNotEmpty() == true || it.urlToImage?.isNotEmpty() == true }
 
                     local_news_adapter.set_items(it)
                     Log.e(TAG, "local news requested")

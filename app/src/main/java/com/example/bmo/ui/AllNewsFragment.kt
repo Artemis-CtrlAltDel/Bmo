@@ -28,7 +28,7 @@ class AllNewsFragment : Fragment() {
     private var _binding : FragmentAllNewsBinding? = null
     private val binding get() = _binding!!
 
-//    private lateinit var view_model: NewsViewModel
+    private lateinit var view_model: NewsViewModel
 
     private lateinit var latest_news_adapter: AllNewsAdapter
     private lateinit var all_news_adapter: AllNewsAdapter
@@ -47,12 +47,12 @@ class AllNewsFragment : Fragment() {
         val activity = requireActivity()
 
         intent = Intent(activity, NewsCardActivity::class.java)
-//        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
+        view_model = activity.let { ViewModelProvider(it)[NewsViewModel::class.java] }
 
         _binding = FragmentAllNewsBinding.inflate(inflater, container, false)
         binding.apply {
 
-//            view_model.all_news(API_KEY, q = "a", sort_by = "publishedAt")
+            view_model.all_news(API_KEY, q = "a", sort_by = "publishedAt")
 
             latest_news_adapter =
                 AllNewsAdapter(
@@ -60,18 +60,11 @@ class AllNewsFragment : Fragment() {
                     arrayListOf(),
                     object: OnItemClick {
                         override fun on_favorite_click(position: Int) {
-//                            latest_news_adapter.item_at(position).favorite_item(view_model = view_model)
+                            latest_news_adapter.item_at(position).favorite_item(view_model = view_model)
                         }
 
                         override fun on_article_click(position: Int) {
                             article = latest_news_adapter.item_at(position)
-
-                            /** This could be useful in the future **/
-//                            when (article.is_source_available()) {
-//                                true -> {intent.putExtra("article", article)
-//                                        startActivity(intent)}
-//                                else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
-//                            }
 
                             intent.putExtra("article", article)
                             startActivity(intent)
@@ -84,18 +77,11 @@ class AllNewsFragment : Fragment() {
                     arrayListOf(),
                     object: OnItemClick {
                         override fun on_favorite_click(position: Int) {
-//                            all_news_adapter.item_at(position).favorite_item(view_model = view_model)
+                            all_news_adapter.item_at(position).favorite_item(view_model = view_model)
                         }
 
                         override fun on_article_click(position: Int) {
                             article = all_news_adapter.item_at(position)
-
-                            /** This could be useful in the future **/
-//                            when (article.is_source_available()) {
-//                                true -> {intent.putExtra("article", article)
-//                                        startActivity(intent)}
-//                                else ->  Toast.makeText(context, "Source id is missing", Toast.LENGTH_SHORT).show()
-//                            }
 
                             intent.putExtra("article", article)
                             startActivity(intent)
@@ -112,25 +98,25 @@ class AllNewsFragment : Fragment() {
                     description= "", content= "", url= "")
             ))
 
-//            view_model.all_news_list.observe(activity)
-//            {
-//                if (it.isNotEmpty()) {
-//                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
-//
-//                    latest_news_adapter.set_items(it)
-//                    Log.e(TAG, "latest news requested")
-//                }
-//            }
+            view_model.all_news_list.observe(activity)
+            {
+                if (it.isNotEmpty()) {
+                    (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
 
-//            view_model.all_news_list.observe(activity)
-//            {
-//                if (it.isNotEmpty()) {
-//                    (it as List<News>).filter { it.description.isNotEmpty() || it.urlToImage.isNotEmpty() }
-//
-//                    all_news_adapter.set_items(it)
-//                    Log.e(TAG, "all news requested")
-//                }
-//            }
+                    latest_news_adapter.set_items(it)
+                    Log.e(TAG, "latest news requested")
+                }
+            }
+
+            view_model.all_news_list.observe(activity)
+            {
+                if (it.isNotEmpty()) {
+                    (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
+
+                    all_news_adapter.set_items(it)
+                    Log.e(TAG, "all news requested")
+                }
+            }
 
             latestNewsRecycler.adapter = latest_news_adapter
             latestNewsRecycler.setHasFixedSize(true)

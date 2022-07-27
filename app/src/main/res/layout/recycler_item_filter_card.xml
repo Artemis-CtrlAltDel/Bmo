@@ -17,7 +17,7 @@
         android:background="@drawable/draw_card_border"
         android:backgroundTintMode="src_over"
 
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="15dp"
         android:paddingVertical="10dp"
 
         android:layout_marginStart="20dp"
@@ -30,7 +30,6 @@
             android:layout_gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:textColor="@color/black"
             android:text="Technologies"
             />
     </LinearLayout>

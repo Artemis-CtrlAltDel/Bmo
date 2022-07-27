@@ -11,6 +11,9 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/draw_tab_indicator.xml" value="0.19" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/draw_tiny_circle.xml" value="0.19" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/ic_bookmark.xml" value="0.183" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/ic_bookmark_active.xml" value="0.19" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/ic_favorite_active.xml" value="0.19" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/drawable/ic_favorite_inactive.xml" value="0.19" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/activity_news_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Bmo/app/src/main/res/layout/fragment_all_news.xml" value="0.25416666666666665" />
