@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bmo.R
 import com.example.bmo.pojo.Filter
 
-class NewsFilterAdapter(val items: ArrayList<Filter>): RecyclerView.Adapter<NewsFilterAdapter.ViewHolder>() {
+class NewsFilterAdapter(val items: ArrayList<Filter>, val on_item_click: OnItemClick): RecyclerView.Adapter<NewsFilterAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
@@ -38,6 +38,7 @@ class NewsFilterAdapter(val items: ArrayList<Filter>): RecyclerView.Adapter<News
                     is_chosen = !is_chosen
                     items.filter { item -> item.category != this.category }.forEach { it.is_chosen = false }
 
+                    on_item_click.on_article_click(position)
                     notifyDataSetChanged()
                 }
             }
@@ -45,4 +46,6 @@ class NewsFilterAdapter(val items: ArrayList<Filter>): RecyclerView.Adapter<News
     }
 
     override fun getItemCount() = items.size
+
+    fun item_at(position: Int) = items[position]
 }

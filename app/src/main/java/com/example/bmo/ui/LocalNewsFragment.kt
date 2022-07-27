@@ -45,6 +45,8 @@ class LocalNewsFragment : Fragment() {
     private lateinit var intent: Intent
     private lateinit var article: News
 
+    private var filter = Filter()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,7 +73,17 @@ class LocalNewsFragment : Fragment() {
                     Filter("Space"),
                     Filter("Bitcoin"),
                     Filter("Technology")
-                )
+                ),
+                object: OnItemClick {
+                    override fun on_favorite_click(position: Int) {}
+
+                    override fun on_article_click(position: Int) {
+                        filter = filter_news_adapter.item_at(position)
+                        Log.e(TAG, "filter clicked : ${filter.category}")
+                        local_news_adapter.notifyDataSetChanged()
+                    }
+
+                }
             )
 
             local_news_adapter = AllNewsAdapter(
@@ -94,10 +106,12 @@ class LocalNewsFragment : Fragment() {
 
                         intent.putExtra("article", article)
                         startActivity(intent)
+
                     }
                 }
             )
 
+            /** Boilerplate code x) **/
             location_service.location_update {
                 val last_location = it.lastLocation
                 val latitude = last_location.latitude
@@ -107,7 +121,8 @@ class LocalNewsFragment : Fragment() {
                     .getFromLocation(latitude, longitude, 1)[0]
 
                 current_location.apply {
-                    view_model.local_news(API_KEY, country = countryCode.lowercase())
+                    view_model.local_news(API_KEY, country = countryCode.lowercase(), category = filter.category.lowercase())
+                    Log.e(TAG, "view model init")
                 }
             }
 

@@ -1,10 +1,12 @@
 package com.example.bmo.others
 
 import com.example.bmo.adapters.AllNewsAdapter
+import com.example.bmo.pojo.Filter
 import com.example.bmo.pojo.News
 import com.example.bmo.viewmodel.NewsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 val likes_formatter = LikesFormatter()
 fun Long.format() = likes_formatter.format(this)
