@@ -1,12 +1,9 @@
 package com.example.bmo.others
 
-import com.example.bmo.adapters.AllNewsAdapter
-import com.example.bmo.pojo.Filter
 import com.example.bmo.pojo.News
 import com.example.bmo.viewmodel.NewsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 val likes_formatter = LikesFormatter()
 fun Long.format() = likes_formatter.format(this)
@@ -26,13 +23,14 @@ fun String.year() = this.split("T")[0].split("-")[0]
 
 fun News.favorite_item(view_model: NewsViewModel) {
 
+    favorite_count += if (is_favorite) -1 else 1
+    is_favorite = !is_favorite
+
     when (is_favorite) {
         true -> view_model.insert_article(this)
         else -> view_model.delete_article(this.id)
     }
 
-    favorite_count += if (is_favorite) -1 else 1
-    is_favorite = !is_favorite
 }
 
 fun News.is_source_available(): Boolean =

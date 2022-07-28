@@ -52,6 +52,7 @@ class NewsCardActivity : AppCompatActivity() {
                 if (author.isNullOrEmpty()) author = "Not available"
                 if (description.isNullOrEmpty()) description = "Description is not available"
                 if (content.isNullOrEmpty()) content = "Content is not available"
+                if (url.isNullOrEmpty()) url = "Link is not available"
 
                 Glide.with(applicationContext).load(urlToImage).into(newsImage)
                 newsTitle.text = title
@@ -60,8 +61,7 @@ class NewsCardActivity : AppCompatActivity() {
                 newsFavoriteCount.text = favorite_count.format()
                 newsDescription.text = description
                 newsContent.text = content
-
-
+                newsReadmore.text = url
 
                 icFavorite.setOnClickListener {
                     article.favorite_item(view_model)

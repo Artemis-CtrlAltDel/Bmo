@@ -21,7 +21,7 @@ data class News(
     @ColumnInfo(defaultValue = "Description is not available")
     var description: String?,
     @ColumnInfo(defaultValue = "Url is not available")
-    val url: String?,
+    var url: String?,
     @ColumnInfo(defaultValue = "UrlToImage is not available")
     val urlToImage: String? = "Loading",
     @ColumnInfo(defaultValue = "PublishedAt is not available")
