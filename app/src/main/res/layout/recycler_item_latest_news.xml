@@ -106,7 +106,7 @@
 
                         android:fontFamily="@font/alata"
                         android:gravity="center_vertical"
-                        android:lineSpacingExtra="5dp"
+                        android:lineSpacingExtra="1dp"
                         android:maxLines="2"
                         android:text="hlqskhdlkqsdlqsdqsdqsdqsdqsdjqsldjlkqsjdlkjqslkdjlqskjdlklqksjdlkqsjlkdjqslkjdlkqsjdl"
                         android:textColor="@color/black"

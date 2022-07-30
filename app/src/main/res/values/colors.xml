@@ -88,4 +88,6 @@
     <color name="color_post_bg">#BF1F283E</color>
 
     <color name="color_toolbar_bg">#BF182C61</color>
+
+    <color name="color_link">#2196F3</color>
 </resources>

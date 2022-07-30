@@ -1,6 +1,7 @@
 package com.example.bmo
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -52,7 +53,10 @@ class NewsCardActivity : AppCompatActivity() {
                 if (author.isNullOrEmpty()) author = "Not available"
                 if (description.isNullOrEmpty()) description = "Description is not available"
                 if (content.isNullOrEmpty()) content = "Content is not available"
-                if (url.isNullOrEmpty()) url = "Link is not available"
+                if (url.isNullOrEmpty()) {
+                    url = "Link is not available"
+                    newsReadmore.isEnabled = false
+                }
 
                 Glide.with(applicationContext).load(urlToImage).into(newsImage)
                 newsTitle.text = title
@@ -61,7 +65,13 @@ class NewsCardActivity : AppCompatActivity() {
                 newsFavoriteCount.text = favorite_count.format()
                 newsDescription.text = description
                 newsContent.text = content
+
                 newsReadmore.text = url
+                newsReadmore.setTextColor(getColor(R.color.color_link))
+                newsReadmore.setOnClickListener {
+                    intent = Intent("android.intent.action.VIEW", Uri.parse(url))
+                    startActivity(intent)
+                }
 
                 icFavorite.setOnClickListener {
                     article.favorite_item(view_model)
