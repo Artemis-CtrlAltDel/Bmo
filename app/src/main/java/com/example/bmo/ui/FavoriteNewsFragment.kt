@@ -82,7 +82,7 @@ class FavoriteNewsFragment : Fragment() {
             favoriteNewsRecycler.adapter = favorite_news_adapter
             favoriteNewsRecycler.setHasFixedSize(true)
             favoriteNewsRecycler.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
 
             return root
         }
