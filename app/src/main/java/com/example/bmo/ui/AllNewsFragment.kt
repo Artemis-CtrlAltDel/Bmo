@@ -106,12 +106,10 @@ class AllNewsFragment : Fragment() {
             }
 
             view_model.all_news_list.observeForever {
-                if (it.isNotEmpty()) {
-                    (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
+                (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
 
-                    all_news_adapter.set_items(it)
-                    Log.e(TAG, "all news requested")
-                }
+                all_news_adapter.set_items(it)
+                Log.e(TAG, "all news requested")
             }
 
             latestNewsRecycler.adapter = latest_news_adapter

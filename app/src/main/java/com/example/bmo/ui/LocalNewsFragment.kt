@@ -125,12 +125,10 @@ class LocalNewsFragment : Fragment() {
             ))
 
             view_model.local_news_list.observeForever {
-                if (it.isNotEmpty()) {
-                    (it as List<News>).filter { it.description?.isNotEmpty() == true || it.urlToImage?.isNotEmpty() == true }
+                (it as List<News>).filter { it.description?.isNotEmpty() == true || it.urlToImage?.isNotEmpty() == true }
 
-                    local_news_adapter.set_items(it)
-                    Log.e(TAG, "local news requested")
-                }
+                local_news_adapter.set_items(it)
+                Log.e(TAG, "local news requested")
             }
 
             localNewsRecycler.adapter = local_news_adapter
