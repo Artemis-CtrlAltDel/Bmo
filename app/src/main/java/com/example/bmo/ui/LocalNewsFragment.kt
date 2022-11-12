@@ -124,8 +124,7 @@ class LocalNewsFragment : Fragment() {
                     description= "", content= "", url= "")
             ))
 
-            view_model.local_news_list.observe(activity)
-            {
+            view_model.local_news_list.observeForever {
                 if (it.isNotEmpty()) {
                     (it as List<News>).filter { it.description?.isNotEmpty() == true || it.urlToImage?.isNotEmpty() == true }
 

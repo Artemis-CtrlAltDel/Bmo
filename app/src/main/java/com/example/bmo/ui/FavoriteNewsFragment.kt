@@ -63,8 +63,8 @@ class FavoriteNewsFragment : Fragment() {
             )
 
             view_model.get_articles()
-            view_model.favorite_news_list?.observe(activity)
-            {
+
+            view_model.favorite_news_list?.observeForever {
                 if (it.isNotEmpty()){
                     favorite_news_adapter.set_items(it as ArrayList<News>)
                 }
