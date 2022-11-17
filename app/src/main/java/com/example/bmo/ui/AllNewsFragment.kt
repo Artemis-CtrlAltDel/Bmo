@@ -98,17 +98,19 @@ class AllNewsFragment : Fragment() {
                     description= "", content= "", url= "")
             ))
 
-            view_model.all_news_list.observeForever {
-                (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
-
-                latest_news_adapter.set_items(it)
+            view_model.all_news_list.observe(activity) {
+                it?.let {
+                    (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
+                    latest_news_adapter.set_items(it)
+                }
                 Log.e(TAG, "latest news requested")
             }
 
-            view_model.all_news_list.observeForever {
-                (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
-
-                all_news_adapter.set_items(it)
+            view_model.all_news_list.observe(activity) {
+                it?.let {
+                    (it as List<News>).filter { !it.description.isNullOrEmpty() || !it.urlToImage.isNullOrEmpty() }
+                    all_news_adapter.set_items(it)
+                }
                 Log.e(TAG, "all news requested")
             }
 
