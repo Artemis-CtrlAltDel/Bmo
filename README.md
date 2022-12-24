@@ -1,4 +1,4 @@
-Android application that fetches news world wide and localy with bookmarking feature to save articles to read later on offline mode
+Android application that fetches news world wide and locally with bookmarking feature to save articles in order to make them available in offline mode
 
 <div style = "display:flex">
 <img src="https://user-images.githubusercontent.com/75863595/185789843-fa48c8b3-2ad4-41cc-ae37-e87f74ada778.png" width="200" />
